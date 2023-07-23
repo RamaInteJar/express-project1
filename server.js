@@ -10,8 +10,7 @@ app.use(express.json())
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
-app.get('/api/v1/tours', (req, res)=>{
-
+const  getAllTours = (req, res)=>{
     res.status(200).json({
         status: 'success',
         results: tours.length, //when sending multiple objects
@@ -20,9 +19,9 @@ app.get('/api/v1/tours', (req, res)=>{
         }
     })
 
-})
+}
 
-app.get('/api/v1/tours/:id', (req, res)=>{
+const getTour = (req, res)=>{
     console.log(req.params)
 
     const id = req.params.id * 1;   //a js trick to convert a string of number into a number
@@ -44,10 +43,9 @@ app.get('/api/v1/tours/:id', (req, res)=>{
         }
     })
 
-})
+}
 
-
-app.post('/api/v1/tours', (req, res)=>{
+const createTour =(req, res)=>{
     // console.log(req.body);
     const newId = tours[tours.length - 1].id + 1;
     const newTour = Object.assign({id: newId}, req.body)
@@ -61,11 +59,9 @@ app.post('/api/v1/tours', (req, res)=>{
             } 
         })
     })
-})
+}
 
-
-//UPDATE (PATCH)
-app.patch('/api/v1/tours/:id', (req, res)=>{
+const updatTour =(req, res)=>{
     if(req.params.id * 1 > tours.length){
             return res.status(404).json({
                 status: 'fail',
@@ -79,11 +75,9 @@ app.patch('/api/v1/tours/:id', (req, res)=>{
             tour: '<Updated tour here>'
         }
     })
-})
+}
 
-
-//DELETE
-app.delete('/api/v1/tours/:id', (req, res)=>{
+const deleteTour =(req, res)=>{
     if(req.params.id * 1 > tours.length){
             return res.status(404).json({
                 status: 'fail',
@@ -96,7 +90,17 @@ app.delete('/api/v1/tours/:id', (req, res)=>{
         data: null,
         
     })
-})
+}
+app.get('/api/v1/tours', getAllTours)  //GET ALL TOURS
+
+app.get('/api/v1/tours/:id', getTour)  //GET A TOUR
+
+app.post('/api/v1/tours', createTour)  //CREATE TOUR
+
+app.patch('/api/v1/tours/:id', updatTour) //UPDATE TOUR
+
+app.delete('/api/v1/tours/:id', deleteTour) //DELETE TOUR
+
 const port = 3000;
 app.listen(port, ()=>{
     console.log(`App running on the port ${port}`);
