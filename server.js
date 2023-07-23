@@ -99,7 +99,6 @@ const deleteTour =(req, res)=>{
 // app.delete('/api/v1/tours/:id', deleteTour) //DELETE TOUR
 
 
-
 app.route('/api/v1/tours').get(getAllTours).post(createTour)
 
 app.route('/api/v1/tours/:id').get(getTour).patch(updatTour).delete(deleteTour)
