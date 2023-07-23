@@ -91,15 +91,19 @@ const deleteTour =(req, res)=>{
         
     })
 }
-app.get('/api/v1/tours', getAllTours)  //GET ALL TOURS
 
-app.get('/api/v1/tours/:id', getTour)  //GET A TOUR
+// app.get('/api/v1/tours', getAllTours)  //GET ALL TOURS
+// app.post('/api/v1/tours', createTour)  //CREATE TOUR
+// app.get('/api/v1/tours/:id', getTour)  //GET A TOU
+// app.patch('/api/v1/tours/:id', updatTour) //UPDATE TOUR
+// app.delete('/api/v1/tours/:id', deleteTour) //DELETE TOUR
 
-app.post('/api/v1/tours', createTour)  //CREATE TOUR
 
-app.patch('/api/v1/tours/:id', updatTour) //UPDATE TOUR
 
-app.delete('/api/v1/tours/:id', deleteTour) //DELETE TOUR
+app.route('/api/v1/tours').get(getAllTours).post(createTour)
+
+app.route('/api/v1/tours/:id').get(getTour).patch(updatTour).delete(deleteTour)
+
 
 const port = 3000;
 app.listen(port, ()=>{
