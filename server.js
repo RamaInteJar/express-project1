@@ -3,6 +3,8 @@ const express =require("express");
 const app = express()
 
 
+
+//CRUD OPERATIONS
 //MIDDLEWARE: the function that can modify an incoming requested data
 app.use(express.json())
 
@@ -61,6 +63,8 @@ app.post('/api/v1/tours', (req, res)=>{
     })
 })
 
+
+//UPDATE (PATCH)
 app.patch('/api/v1/tours/:id', (req, res)=>{
     if(req.params.id * 1 > tours.length){
             return res.status(404).json({
@@ -74,6 +78,23 @@ app.patch('/api/v1/tours/:id', (req, res)=>{
         data: {
             tour: '<Updated tour here>'
         }
+    })
+})
+
+
+//DELETE
+app.delete('/api/v1/tours/:id', (req, res)=>{
+    if(req.params.id * 1 > tours.length){
+            return res.status(404).json({
+                status: 'fail',
+                message: "invalid ID"
+            })
+        }
+
+    res.status(204).json({
+        status: 'success',
+        data: null,
+        
     })
 })
 const port = 3000;
